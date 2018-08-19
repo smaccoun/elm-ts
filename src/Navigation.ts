@@ -10,9 +10,9 @@ import { Cmd } from './Cmd'
 import { Sub, none, batch } from './Sub'
 import * as html from './Html'
 import { Location as HistoryLocation } from 'history'
-import createHashHistory from 'history/createHashHistory'
+import createBrowserHistory from 'history/createBrowserHistory'
 
-const history = createHashHistory()
+const history = createBrowserHistory()
 
 const location$ = new Subject<Location>()
 
@@ -23,6 +23,7 @@ function getLocation(): Location {
 }
 
 history.listen(location => {
+  console.log('LISTENING: ', location)
   location$.next(location)
 })
 
