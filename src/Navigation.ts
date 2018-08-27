@@ -16,6 +16,8 @@ const history = createBrowserHistory()
 
 const location$ = new Subject<Location>()
 
+
+
 export type Location = HistoryLocation
 
 function getLocation(): Location {
@@ -43,6 +45,12 @@ export function program<model, msg, dom>(
   view: (model: model) => html.Html<dom, msg>,
   subscriptions: (model: model) => Sub<msg> = () => none
 ): html.Program<model, msg, dom> {
+  location$.subscribe({
+    next: (l: Location) => {
+      console.log('SEE NOW WE ARE SUBSCRIBED WHICH IS COOL AND HERES THE LOCATION: ', l)
+      locationToMessage(l)
+    }
+  })
   const onChangeLocation$ = location$.map(location => locationToMessage(location))
   const subs = (model: model): Sub<msg> => batch([subscriptions(model), onChangeLocation$])
   return html.program(init(getLocation()), update, view, subs)
