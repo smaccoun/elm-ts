@@ -20,7 +20,9 @@ export interface Program<model, msg> {
 }
 
 function modelCompare<A, B>(x: [A, B], y: [A, B]): boolean {
-  return x === y || x[0] === y[0]
+  const isSame = x === y || x[0] === y[0]
+  console.log('MODEL COMPARE! ', isSame)
+  return isSame
 }
 
 function cmdCompare<A, B>(x: [A, B], y: [A, B]): boolean {
